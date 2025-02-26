@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>Kero's Convenience Store</title>
+</head>
+
+<body>
+
+    <div class="site-header">
+
+        <!-- Site header -->
+
+        <div class="site-title"><img src="../Assignment1/images/frog1.png" id="kero" class="wiggle" alt="search" width="60"
+                height="60" onclick="showAll()">Kero's Convenience Store</div>
+
+        <!-- Navbar -->
+
+        <div class=" nav-bar">
+
+            <!-- Cart icon -->
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link icons" id="cart-icon"><img src="../Assignment1/images/basket.png" class="wiggle"
+                        id="cart-img" alt="cart" width="48" height="48" onclick="openCart()" data-dropdown-button></button>
+            </div>
+
+            <!-- Search icon -->
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link icons" id="search-icon"><img src="../Assignment1/images/search.png"
+                        class="wiggle" id="search-img" alt="search" width="48" height="48"
+                        onclick="searchDrop()" data-dropdown-button></button>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="showAll()" id="all" data-dropdown-button>All</button>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="topSearch(this)" id="fresh-food" data-dropdown-button>Fresh
+                    Food</button>
+                <div class="dropdown-menu">
+                    <div>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="meat-fish">Meat & Fish</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="dairy">Dairy</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="fruit">Fruit</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="snacks">Snacks</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="topSearch(this)" id="frozen-food" data-dropdown-button>Frozen
+                    Food</button>
+                <div class="dropdown-menu">
+                    <div>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="frozen-meat-fish">Meat &
+                            Fish</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="frozen-dairy">Frozen Dairy</button>
+                        <button class="btn btn-menu disabled" onclick="subSearch(this)" id="frozen-fruit">Frozen
+                            Fruit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="topSearch(this)" id="beverages"
+                    data-dropdown-button>Beverages</button>
+                <div class="dropdown-menu">
+                    <div>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="tea">Tea</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="coffee">Coffee</button>
+                        <button class="btn btn-menu disabled" onclick="subSearch(this)" id="soft-drinks">Soft
+                            Drinks</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="topSearch(this)" id="home-health" data-dropdown-button>Home &
+                    Health</button>
+                <div class="dropdown-menu">
+                    <div>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="medicine">Medicine</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="cleaning">Cleaning</button>
+                        <button class="btn btn-menu disabled" onclick="subSearch(this)" id="vitamins">Vitamins</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown" data-dropdown>
+                <button class="nav-link" onclick="topSearch(this)" id="pet-food" data-dropdown-button>Pet Food</button>
+                <div class="dropdown-menu">
+                    <div>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="dog-food">Dog Food</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="cat-food">Cat Food</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="bird-food">Bird Food</button>
+                        <button class="btn btn-menu" onclick="subSearch(this)" id="fish-food">Fish Food</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Search dropdown-->
+
+        <div id="search-wrapper">
+
+            <div class="search-container">
+                <!-- Search by name -->
+                <div id="search-inner-container"><input type="text" name="search-bar" id="search-bar"
+                        placeholder="Search by product name" onkeyup="search()" /></div>
+                <div>or</div>
+
+                <!-- Price range slider -->
+                <div id="search-inner-container"></div>
+                <div><b>Min price:</b> $<span id="min-value"></span></div>
+                <div><input type="range" class="slider" id="min-slider" min="0" max="15"></div>
+
+                <div><b>Max price:</b> $<span id="max-value"></span></div>
+                <div><input type="range" class="slider" id="max-slider" min="0" max="15"></div>
+
+                <button type="submit" class="btn-search" onclick="priceSearch()">Search</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Shopping cart side menu -->
+
+    <div class="shopping-cart-side" id="cart-side">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&#8249;</a>
+        <section class="container content-section" id="content-section">
+            <h2 class="section-header">Shopping Cart</h2>
+
+            <div class="item-content" id="item-content">
+
+                <div class="cart-row">
+                    <span class="cart-item cart-header cart-column">Item</span>
+                    <span class="cart-price cart-header cart-column">Price per</span>
+                    <span class="cart-quantity cart-header cart-column">Quantity</span>
+                </div>
+                <div class="cart-items">
+                </div>
+                <div class="cart-total">
+                    <strong class="cart-total-title">Total</strong>
+                    <span class="cart-total-price">$0</span>
+                </div>
+
+            </div>
+
+            <div class="cart-end-buttons">
+                <button class="btn btn-purchase disabled" type="button" onclick="openConfirm(confirm)">Checkout</button>
+                <button class="btn btn-empty" type="button">Empty Cart</button>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- Item detail popup -->
+
+    <div class="popup" id="popup">
+        <div class="popup-header">
+            <div class="title">Item Details</div>
+            <button class="popup-closebtn" data-popup-close>&times;</button>
+        </div>
+        <div class="popup-content" id="popup-content">
+        </div>
+    </div>
+
+    <!-- Confirmation detail popup -->
+
+    <div class="confirm" id="confirm">
+
+        <div class="order-details">
+
+            <div id="confirm-cart">
+                <div class="popup-header">
+                    <div class="title">Order Details</div>
+                </div>
+                <div class="order-details-content" id="order-details-content">
+                </div>
+            </div>
+
+            <div id="confirm-shipping">
+                <div class="popup-header">
+                    <div class="title">Shipping Details</div>
+                    <button class="popup-closebtn" onclick="closeConfirm(confirm)">&times;</button>
+                </div>
+                <form class="form" action="confirmation.php" method="post">
+                    <table class="confirm-form">
+                        <tr>
+                            <th>First name: </th>
+                            <td><input type="text" class="confirm-form-input" name="fname" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>Last name: </th>
+                            <td><input type="text" class="confirm-form-input" name="lname" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>Address 1: </th>
+                            <td><input type="text" class="confirm-form-input" name="address" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>Address 2: </th>
+                            <td><input type="text" class="confirm-form-input" name="address" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>Suburb: </th>
+                            <td><input type="text" class="confirm-form-input" name="suburb" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>State: </th>
+                            <td><input type="text" class="confirm-form-input" name="state" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>Country: </th>
+                            <td><input type="text" class="confirm-form-input" name="country" autocomplete="off" required></td>
+                        </tr>
+                        <tr>
+                            <th>E-mail: </th>
+                            <td><input type="email" class="confirm-form-input" name="email" autocomplete="off" required></td>
+                        </tr>
+                        <tr><input type="text" id="date" name="date" readonly></tr>
+                        <tr>
+                            <th></th>
+                            <td><button type="submit" class="btn btn-confirm" name="Confirm Order">Place Order</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+    <div id="overlay"></div>
+
+    <!-- Information area -->
+
+    <ul class="grid-container">
+
+        <!-- 1 -->
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="1">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1000.jpg'>
+                    <div class="product-name">Fish Fingers</div>
+                    <div class="product-price">$2.50</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1500</div>
+                    <div class="category">frozen-food</div>
+                    <div class="sub-category">frozen-meat-fish</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 2 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="2">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1001.jpg'>
+                    <div class="product-name">Fish Fingers</div>
+                    <div class="product-price">$5.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1000g</div>
+                    <div class="product-stock">Out of Stock</div>
+                    <div class="stock-quantity">0</div>
+                    <!-- <div class="stock-quantity">750</div> -->
+                    <div class="category">frozen-food</div>
+                    <div class="sub-category">frozen-meat-fish</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 3 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="3">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1002.jpg'>
+                    <div class="product-name">Hamburger Patties</div>
+                    <div class="product-price">$2.35</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">10 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1200</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">meat-fish</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 4 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="4">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1003.jpg'>
+                    <div class="product-name">Shelled Prawns</div>
+                    <div class="product-price">$6.90</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">250g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">300</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">meat-fish</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 5 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="5">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1004.jpg'>
+                    <div class="product-name">Tub Ice Cream</div>
+                    <div class="product-price">$1.80</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1L</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">800</div>
+                    <div class="category">frozen-food</div>
+                    <div class="sub-category">frozen-dairy</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 6 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="6">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/1005.jpg'>
+                    <div class="product-name">Tub Ice Cream</div>
+                    <div class="product-price">$3.40</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">2L</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1200</div>
+                    <div class="category">frozen-food</div>
+                    <div class="sub-category">frozen-dairy</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 7 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="7">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2000.jpg'>
+                    <div class="product-name">Panadol</div>
+                    <div class="product-price">$3.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">24 Pack</div>
+                    <div class="product-stock">Out of Stock</div>
+                    <div class="stock-quantity">0</div>
+                    <!-- <div class="stock-quantity">2000</div> -->
+                    <div class="category">home-health</div>
+                    <div class="sub-category">medicine</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 8 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="8">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2001.jpg'>
+                    <div class="product-name">Panadol</div>
+                    <div class="product-price">$5.50</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">50 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1000</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">medicine</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 9 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="9">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2002.jpg'>
+                    <div class="product-name">Bath Soap</div>
+                    <div class="product-price">$2.60</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">6 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">cleaning</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 10 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="10">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2003.jpeg'>
+                    <div class="product-name">Garbage Bags (S)</div>
+                    <div class="product-price">$1.50</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">10 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">cleaning</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 11 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="11">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2004.jpeg'>
+                    <div class="product-name">Garbage Bags (L)</div>
+                    <div class="product-price">$5.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">50 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">300</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">cleaning</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 12 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="12">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2005.jpg'>
+                    <div class="product-name">Washing Powder</div>
+                    <div class="product-price">$4.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1000g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">800</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">cleaning</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 13 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="13">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3000.jpg'>
+                    <div class="product-name">Cheddar Cheese</div>
+                    <div class="product-price">$8.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1000</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">dairy</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 14 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="14">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3001.jpg'>
+                    <div class="product-name">Cheddar Cheese</div>
+                    <div class="product-price">$15.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1000g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1000</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">dairy</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 15 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="15">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3002.jpeg'>
+                    <div class="product-name">T Bone Steak</div>
+                    <div class="product-price">$7.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1000g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">200</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">meat-fish</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 16 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="16">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3003.jpg'>
+                    <div class="product-name">Navel Oranges</div>
+                    <div class="product-price">$3.99</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">Bag 20</div>
+                    <div class="product-stock">Out of Stock</div>
+                    <div class="stock-quantity">0</div>
+                    <!-- <div class="stock-quantity">200</div> -->
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">fruit</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 17 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="17">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3004.jpg'>
+                    <div class="product-name">Bananas</div>
+                    <div class="product-price">$1.49</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1kg</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">400</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">fruit</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 18 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="18">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3005.jpg'>
+                    <div class="product-name">Peaches</div>
+                    <div class="product-price">$2.99</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1kg</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">400</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">fruit</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!--19 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="19">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3006.jpg'>
+                    <div class="product-name">Grapes</div>
+                    <div class="product-price">$3.50</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1kg</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">200</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">fruit</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 20 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="20">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/3007.jpg'>
+                    <div class="product-name">Apples</div>
+                    <div class="product-price">$1.99</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1kg</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">fruit</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 21 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="21">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4000.jpg'>
+                    <div class="product-name">Earl Grey Tea Bags</div>
+                    <div class="product-price">$2.49</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">25 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1200</div>
+                    <div class="category">beverages</div>
+                    <div class="sub-category">tea</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 22 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="22">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4001.jpg'>
+                    <div class="product-name">Earl Grey Tea Bags</div>
+                    <div class="product-price">$7.25</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">100 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">1200</div>
+                    <div class="category">beverages</div>
+                    <div class="sub-category">tea</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 23 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="23">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4002.jpg'>
+                    <div class="product-name">Earl Grey Tea Bags</div>
+                    <div class="product-price">$13.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">200 Pack</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">800</div>
+                    <div class="category">beverages</div>
+                    <div class="sub-category">tea</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 24 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="24">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4003.jpg'>
+                    <div class="product-name">Instant Coffee</div>
+                    <div class="product-price">$2.89</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">200g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">beverages</div>
+                    <div class="sub-category">coffee</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 25 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="25">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4004.jpg'>
+                    <div class="product-name">Instant Coffee</div>
+                    <div class="product-price">$5.10</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">beverages</div>
+                    <div class="sub-category">coffee</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 26 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="26">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/4005.jpg'>
+                    <div class="product-name">Chocolate Bar</div>
+                    <div class="product-price">$2.50</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">300</div>
+                    <div class="category">fresh-food</div>
+                    <div class="sub-category">snacks</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 27 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="27">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/5000.jpg'>
+                    <div class="product-name">Dry Dog Food</div>
+                    <div class="product-price">$5.95</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">5kg</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">400</div>
+                    <div class="category">pet-food</div>
+                    <div class="sub-category">dog-food</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 28 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="28">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/5001.jpg'>
+                    <div class="product-name">Dry Dog Food</div>
+                    <div class="product-price">$1.95</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">1kg</div>
+                    <div class="product-stock">Out of Stock</div>
+                    <div class="stock-quantity">0</div>
+                    <!-- <div class="stock-quantity">400</div> -->
+                    <div class="category">pet-food</div>
+                    <div class="sub-category">dog-food</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 29 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="29">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/5002.jpg'>
+                    <div class="product-name">Bird Food</div>
+                    <div class="product-price">$3.99</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">200</div>
+                    <div class="category">pet-food</div>
+                    <div class="sub-category">bird-food</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 30 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="30">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/5003.jpg'>
+                    <div class="product-name">Cat Food</div>
+                    <div class="product-price">$2.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">200</div>
+                    <div class="category">pet-food</div>
+                    <div class="sub-category">cat-food</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 31 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="31">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/5004.jpg'>
+                    <div class="product-name">Fish Food</div>
+                    <div class="product-price">$3.00</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">500g</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">200</div>
+                    <div class="category">pet-food</div>
+                    <div class="sub-category">fish-food</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+        <!-- 31 -->
+
+        <li class="product-item">
+            <div class="product-container" data-popup-target="#popup" id="32">
+                <div class="tile-info">
+                    <img class="product-image" src='../Assignment1/images/2006.jpg'>
+                    <div class="product-name">Laundry Bleach</div>
+                    <div class="product-price">$3.55</div>
+                </div>
+                <div class="more-info">
+                    <div class="product-quantity">2L</div>
+                    <div class="product-stock">In Stock!</div>
+                    <div class="stock-quantity">500</div>
+                    <div class="category">home-health</div>
+                    <div class="sub-category">cleaning</div>
+                </div>
+            </div>
+            <div><button class="btn btn-small" type="button">Add to Cart</button></div>
+        </li>
+
+    </ul>
+
+</body>
+
+</html>
